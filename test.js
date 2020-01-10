@@ -1,1 +1,1 @@
-console.log(Math.sqrt(17))
+console.log(2 ** 3)
