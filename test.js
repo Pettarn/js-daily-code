@@ -1,8 +1,14 @@
-let a = 1
-let b = 2
+function func () {
+    let count = 0
 
-function swap (a, b) {
-    [a, b] = [b, a]
+    return function () {
+        count++
+        return count
+    }
 }
 
+let a = func()()
+let b = func()()
+
 console.log(a)
+console.log(b)
