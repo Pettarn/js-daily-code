@@ -1,14 +1,17 @@
-function func () {
-    let count = 0
+let arr = [1, 2, 3]
+let obj = {}
+let val = 2
 
-    return function () {
-        count++
-        return count
-    }
+function change (x) {
+    // x = typeof x
+    x.a = 'hello'
+    console.log(x)
 }
 
-let a = func()()
-let b = func()()
+change(arr)
+change(obj)
+change(val)
 
-console.log(a)
-console.log(b)
+console.log(arr)
+console.log(obj)
+console.log(val)
