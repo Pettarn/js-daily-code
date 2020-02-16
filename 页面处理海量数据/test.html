@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>页面加载海量数据</title>
+</head>
+
+<body>
+    <ul id="list-with-big-data">1000 数据</ul>
+    <script>
+        let ulContainer = document.querySelector('#list-with-big-data')
+        let totalCount = 1e100
+        let batch = 5
+        let batchCount = totalCount / batch
+        let curBatch = 0
+        let curCount = 0
+        function __append () {
+            let fragment = document.createDocumentFragment()
+            for (let i = 0; i < 5; i++) {
+                let li = document.createElement('li')
+                curCount = curBatch * batch + i + 1
+                li.innerHTML = curCount
+                fragment.appendChild(li)
+            }
+            ulContainer.appendChild(fragment)
+            curBatch++
+            if (curCount === 1e100) {
+                alert('finish')
+            } else if (curCount < 1e100) {
+                setTimeout(() => {
+                    // 在重绘之前执行
+                    window.requestAnimationFrame(__append)
+                })
+            } else {
+                alert('bug')
+            }
+        }
+        __append()
+    </script>
+</body>
+
+</html>

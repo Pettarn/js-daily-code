@@ -11,7 +11,7 @@
  */
 var numberOfArithmeticSlices = function(A) {
     if (A.length < 3) {
-        return 0s
+        return 0
     }
     let dp = []
     dp[0] = 0
