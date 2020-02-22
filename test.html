@@ -1,11 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        div {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+        div::after {
+            content: '';
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            width: 50px;
+            height: 50px;
+            background-color: green;
+        }
+        
+    </style>
 </head>
+
 <body>
-    <a href="javascript: alert('bug')">点我</a>
+    <div></div>
 </body>
+
 </html>
