@@ -1,21 +1,23 @@
-new Promise((resolve, reject) => {
-    // 1
-    setTimeout(() => {
-        // 2
-        resolve(1)
-        console.log(1)
+Promise.all = function (promises) {
+    return new Promise((resolve, reject) => {
+        let done = createDone(promises.length, resolve)
+        for (let {promise, index} of promises) {
+            promise.then((value) => {
+                done(index, value)
+            }).catch((err) => {
+                reject(err)
+            })
+        }
     })
-})
-.then((value) => {
-    // return new Promise((resolve, reject) => {
-    //     // 3
-    //     setTimeout(() => {
-    //         resolve(value + 1)
-    //         console.log(2)
-    //     })
-    // })
-    return value
-})
-.then((value) => {
-    console.log(value + 1)
-})
+}
+
+function createDone (length, resolve) {
+    let count = 0
+    let values = []
+    return function (index, value) {
+        values[index] = value
+        if (++count === length) {
+            resolve(values)
+        }
+    }
+}

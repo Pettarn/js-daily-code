@@ -75,3 +75,76 @@ Promise.prototype.then = function (onFulfilled, onRejected) {
         }
     })
 }
+
+
+Promise.all = function (promiseList) {
+    let resolveArgs = []
+    let reason = null
+    return new Promise((resolve, reject) => {
+        for (let {i, index} of promiseList) {
+            i.then((value) => {
+                resolveArgs[index] = value
+            }).catch((err) => {
+                if (!reason) {
+                    reason = err
+                }
+            })
+        }
+        setTimeout(() => {
+            if (!reason) {
+                resolve(resolveArgs)
+            } else {
+                reject(reason)
+            }
+        })
+    })
+}
+
+
+Promise.all = function (promises) {
+    return new Promise((resolve, reject) => {
+        let done = createDone(promises.length, resolve)
+        for (let {promise, index} of promises) {
+            promise.then((value) => {
+                done(index, value)
+            }).catch((err) => {
+                reject(err)
+            })
+        }
+    })
+}
+
+function createDone (length, resolve) {
+    let count = 0
+    let values = []
+    return function (index, value) {
+        values[index] = value
+        if (++count === length) {
+            resolve(values)
+        }
+    }
+}
+
+Promise.race = function (promises) {
+    return new Promise((resolve, reject) => {
+        promises.forEach((promise) => {
+            promise.then((resolve, reject))
+        })
+    })
+}
+
+Promise.prototype.catch = function (onRejected) {
+    return this.then(null, onRejected)
+}
+
+Promise.resolve = function (value) {
+    return new Promise((resolve, reject) => {
+        resolve(value)
+    })
+}
+
+Promise.reject = function (reason) {
+    return new Promise((resolve, reject) => {
+        reject(reason)
+    })
+}
