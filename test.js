@@ -1,26 +1,20 @@
-let user = {
-    name: 'Tom'
-}
-
-user = new Proxy(user, {
-    get (target, prop) {
-        return target[prop]
-    },
-    set (target, prop, value) {
-        target[prop] = value
-    },
-    ownKeys (target) {
-        return Object.keys(target)
+var n = parseInt(readline());
+let ans
+let N
+let arr
+for(var i = 0;i < n; i++){
+    if (i === 0) {
+        lines = readline().split(" ")
+        N = lines[0]
+    } else {
+        arr = lines
     }
-})
-
-let a = 18
-
-let another = {
-    age: a
 }
 
-a = 19
+arr = arr.sort()
 
-user.age = a
-console.log(another)
+
+for (let i = N; i <= N+N; i++) {
+    ans += N
+}
+print(ans);
