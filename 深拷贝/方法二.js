@@ -1,24 +1,28 @@
 // 递归
 let obj = {
-    val: 1,
+    val: [1, 2, 3],
     subObj: {
         val: 2,
         grandObj: {
             val: 3
         }
     },
-    method () {
+    method() {
         console.log('a')
     }
 }
 
-function deepClone (obj) {
+function deepClone(obj) {
     let result = {}
     for (let item in obj) {
-        if (typeof item !== "object") {
-            result[item] = obj[item]
-        } else {
+        if (obj[item] instanceof Array) {
+            result[item] = [].slice.call(obj[item])
+        } else if (typeof obj[item] === 'function') {
+            result[item] = obj[item].bind(result)
+        } else if (typeof obj[item] === 'object') {
             result[item] = deepClone(obj[item])
+        } else {
+            result[item] = obj[item]
         }
     }
     return result
@@ -26,4 +30,4 @@ function deepClone (obj) {
 
 let result = deepClone(obj)
 
-console.log(result !== obj ? result : 'bug')
+console.log(result.val !== obj.val ? result : 'bug')
