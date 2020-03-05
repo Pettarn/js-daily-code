@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+        }
+        #big {
+            width: 300px;
+            height: 300px;
+            background-color: yellow;
+        }
+        #small {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="big">
+        <div id="small"></div>
+    </div>
+    <script>
+        let small = document.getElementById('small')
+        console.log(small)
+        small.onmousedown = function (e) {
+            this.style.position = 'absolute'
+            this.style.zIndex = 1000
+            let {left, top} = this.getBoundingClientRect()
+            console.log(left, top)
+            // 鼠标相对于小球的坐标
+            let shiftX = e.clientX - left
+            let shiftY = e.clientY - top
+            console.log(shiftX, shiftY)
+
+            function moveAt (X, Y) {
+                small.style.left = X - shiftX + 'px';
+                small.style.top = Y - shiftY + 'px';
+            }
+
+            function onMouseMove (event) {
+                moveAt(event.pageX, event.pageY)
+            }
+
+            document.addEventListener('mousemove', onMouseMove)
+            
+            this.onmouseup = function () {
+                document.removeEventListener('mousemove', onMouseMove)
+            }
+        }
+    </script>
+</body>
+</html>

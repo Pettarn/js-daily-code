@@ -1,6 +1,1 @@
-let arr = [1, 2, 3, 4, 5]
-let result = arr.reduce((accumulate, current, index, ) => {
-    return accumulate += current
-})
-
-console.log(result)
+let buffer = new ArrayBuffer(16)
