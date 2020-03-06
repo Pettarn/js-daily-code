@@ -9,11 +9,18 @@ head.next.next = new ListNode(3)
 
 function ReverseList(pHead)
 {
-    let a = null
-    let b = null
-    while (a) {
-        
+    let pCur = null
+    let pNext = null
+
+    while (pHead) {
+        pNext = pHead.next
+        pHead.next = pCur
+        pCur = pHead
+        pHead = pNext
     }
-    
+
+    return pCur
 }
+
+console.log(ReverseList(head))
 
