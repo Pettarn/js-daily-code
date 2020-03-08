@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+        }
+        #big {
+            width: 300px;
+            height: 300px;
+            background-color: yellow;
+        }
+        #small {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="big">
+        <div id="small"></div>
+    </div>
+    <script>
+        let small = document.getElementById('small')
+        small.addEventListener('touchstart', function (e) {
+            let {left, top} = this.getBoundingClientRect()
+            let shiftX = e.targetTouches[0].clientX - left
+            let shiftY = e.targetTouches[0].clientY - top
+            small.addEventListener('touchmove', function (e) {
+                this.style.left = e.targetTouches[0].clientX - shiftX + 'px'
+                this.style.top = e.targetTouches[0].clientY - shiftY + 'px'
+            })
+        }, false)
+    </script>
+</body>
+</html>
