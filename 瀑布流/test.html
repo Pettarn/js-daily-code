@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box {
+            position: relative;
+        }
+
+        #box>img {
+            position: absolute;
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <img src="tu1.jpg" />
+        <img src="tu2.jpg" />
+        <img src="tu3.jpg" />
+        <img src="tu4.jpg" />
+        <img src="tu5.jpg" />
+        <img src="tu6.jpg" />
+        <img src="tu7.jpg" />
+        <img src="tu8.jpg" />
+    </div>
+    <script>
+        let box = document.getElementById('box')
+        let imgList = box.children
+        let length = imgList.length
+        let gap = 10
+        function waterfall () {
+            let pageWidth = getPageWidth()
+            let imgWidth = imgList[0].offsetWidth
+            let columns = parseInt(pageWidth / (imgWidth + gap))
+            let arr = []
+            for (let i = 0; i < length; i++) {
+                if (i < columns) {
+                    imgList[i].style.top = 0
+                    imgList[i].style.left = i * (imgWidth + gap) + 'px'
+                    arr.push(imgList[i].offsetHeight)
+                } else {
+                    let minHeight = Infinity
+                    let index = null
+                    for (let j = 0; j < arr.length; j++) {
+                        if (arr[j] < minHeight) {
+                            minHeight = arr[j]
+                            index = j
+                        }
+                    }
+                    imgList[i].style.top = arr[index] + gap + 'px'
+                    imgList[i].style.left = index * (imgWidth + gap) + 'px'
+                    arr[index] += imgList[i].offsetHeight + gap
+                }
+
+                
+            }
+        }
+
+        window.onload = function () {
+            waterfall()
+        }
+
+        window.onresize = function () {
+            waterfall()
+        }
+
+        function getPageWidth () {
+            return Math.max(
+                document.body.offsetWidth, 
+                document.body.clientWidth,
+                document.documentElement.offsetWidth,
+                window.innerWidth
+            )
+        }
+        
+    </script>
+</body>
+</html>
