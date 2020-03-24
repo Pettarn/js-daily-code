@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const jsonp = ({url, params, callbackName}) => {
+            let generateUrl = () => {
+                let dataStr = ''
+                for (let item in params) {
+                    dataStr += `${item}=${params[item]}&`
+                }
+                dataStr += `callback=${callbackName}`
+                return `${url}?${dataStr}`
+            }
+
+            return new Promise((resolve, reject) => {
+                let scriptElem = docuemnt.createElement('script')
+                scriptElem.src = generateUrl()
+                document.body.appendChild(scriptElem)
+                window[callbackName] = (data) => {
+                    resolve(data)
+                    document.body.removeChild(scriptElem)
+                }
+            })
+        }
+
+        jsonp({
+            url: 'http://localhost:8080',
+            params: {
+                a: 1,
+                b: 2
+            },
+            callbackName: 'callback'
+        }).then((data) => {
+            console.log(data)
+        })
+    </script>
+</body>
+</html>

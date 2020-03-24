@@ -1,9 +1,10 @@
-const http = require('http')
+const express = require('express')
+const app = express()
 
-http.createServer((req, res) => {
-    req.on('getName?callback=requestJsonp', () => {
-        
-    }) 
+app.get('/', function (req, res) {
+    let { a, b, callback } = req.query
+
+    res.end(`${callback}('数据包')`)
 })
 
-server.listen(3000)
+app.listen(3000)
