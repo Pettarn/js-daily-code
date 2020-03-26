@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+        }
+        #box>img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            /* display: none; */
+        }
+        .hidden {
+            display: none;
+        }
+        .display {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <img id="img1" src="slider-1.png" />
+        <img id="img2"  src="slider-2.png" />
+        <img id="img3"  src="slider-3.png" />
+    </div>
+    <script>
+        let box = document.getElementById('box')
+        let imgList = box.children
+        let flag = 0
+        imgList[flag].className = 'display'
+        setInterval(() => {
+            imgList[flag].className = 'hidden'
+            flag = (flag + 1) % 3
+            imgList[flag].className = 'display'
+        }, 1000)
+    </script>
+</body>
+</html>
