@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        // http://127.0.0.1?callback=func&name=fjh&age=21
+        function jsonp (url, callbackName) {
+            return new Promise((resolve, reject) => {
+                const scriptElem = document.createElement('script')
+                scriptElem.src = url
+                window[callbackName] = function (data) {
+                    resolve(data)
+                }
+            })
+        }
+        jsonp("http://127.0.0.1?callback=func").then(data => {
+            console.log(data)
+        })
+    </script>
+</body>
+</html>
