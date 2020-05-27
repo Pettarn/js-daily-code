@@ -9,13 +9,11 @@ function delay (time) {
 }
 
 const arr = [3, 4, 5]
-const length = arr.length
+let promise = Promise.resolve()
 
-let count = 0
-
-const dispatch = function (promise, arr) {
-    if (count < length)
-        return dispatch(promise.then(() => delay(arr[count++])), arr)
+for (let item of arr) {
+    promise = promise.then(() => delay(item))
 }
 
-dispatch(Promise.resolve(), arr)
+
+
